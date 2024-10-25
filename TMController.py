@@ -1,10 +1,9 @@
-
 from pyscript.js_modules import teach, pose, ble_library, mqtt_library
 
 myClient = mqtt_library.myClient("broker.hivemq.com", 8884)
 mqtt_connected = False
-sub_topic = 'ME35-24/julian'
-pub_topic = 'ME35-24/julian'
+sub_topic = 'ME35-24/listen'
+pub_topic = 'ME35-24/tell'
 
 async def received_mqtt_msg(message):
     message = myClient.read().split('	')  #add here anything you want to do with received messages
@@ -22,11 +21,7 @@ async def connect(name):
     myClient.subscribe(sub_topic)
     myClient.callback = received_mqtt_msg
     mqtt_connected = True
-    
 
-def send(message):
-    print('sending ', message)
-    myClient.publish(pub_topic, message)
 
 def get_predictions(num_classes):
     predictions = []
